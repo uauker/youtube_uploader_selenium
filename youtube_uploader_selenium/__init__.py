@@ -24,8 +24,9 @@ class YouTubeUploader:
     """A class for uploading videos on YouTube via Selenium using metadata JSON file
     to extract its title, description etc"""
 
-    def __init__(self, video_path: str, metadata_json_path: Optional[str] = None) -> None:
+    def __init__(self, video_path: str, thumb_path: Optional[str] = None, metadata_json_path: Optional[str] = None) -> None:
         self.video_path = video_path
+        self.thumb_path = thumb_path
         self.metadata_dict = load_metadata(metadata_json_path)
         current_working_dir = str(Path.cwd())
         self.browser = Firefox(current_working_dir, current_working_dir)
@@ -84,7 +85,7 @@ class YouTubeUploader:
         self.logger.debug('The video title was set to \"{}\"'.format(self.metadata_dict[Constant.VIDEO_TITLE]))
 
         video_description = self.metadata_dict[Constant.VIDEO_DESCRIPTION]
-        if video_description:
+        if video_description and len(video_description) < 5010:
             description_container = self.browser.find(By.XPATH,
                                                       Constant.DESCRIPTION_CONTAINER)
             description_field = self.browser.find(By.ID, Constant.TEXTBOX, element=description_container)
@@ -96,9 +97,34 @@ class YouTubeUploader:
             self.logger.debug(
                 'The video description was set to \"{}\"'.format(self.metadata_dict[Constant.VIDEO_DESCRIPTION]))
 
+        if self.thumb_path and len(self.thumb_path) > 0:
+            time.sleep(Constant.USER_WAITING_TIME)
+            absolute_thumb_path = str(Path.cwd() / self.thumb_path)
+            self.browser.find(By.XPATH, Constant.THUMB_CONTAINER).send_keys(absolute_thumb_path)
+            time.sleep(Constant.USER_WAITING_TIME * 10)
+
         kids_section = self.browser.find(By.NAME, Constant.NOT_MADE_FOR_KIDS_LABEL)
         self.browser.find(By.ID, Constant.RADIO_LABEL, kids_section).click()
         self.logger.debug('Selected \"{}\"'.format(Constant.NOT_MADE_FOR_KIDS_LABEL))
+
+        # video_tags = self.metadata_dict[Constant.VIDEO_TAGS]
+        # if video_tags:
+        #     self.browser.driver.execute_script(Constant.MODAL_SCROLL_END)
+        #     time.sleep(Constant.USER_WAITING_TIME)
+        #     tags_container = self.browser.find(By.XPATH, Constant.MORE_OPTIONS_CONTAINER)
+        #     tags_container.click()
+        #     time.sleep(Constant.USER_WAITING_TIME)
+        #     self.browser.driver.execute_script(Constant.MODAL_SCROLL_END)
+        #     time.sleep(Constant.USER_WAITING_TIME)            
+        #     tags_field = self.browser.find(By.ID, 'chip-bar', element=tags_container)
+        #     tags_field = self.browser.find(By.TAG_NAME, 'ytcp-free-text-chip-bar')
+        #     tags_field = self.browser.find(By.ID, 'text-input')
+        #     tags_field.click()
+        #     time.sleep(Constant.USER_WAITING_TIME)
+        #     tags_field.send_keys(self.metadata_dict[Constant.VIDEO_TAGS])
+        #     time.sleep(Constant.USER_WAITING_TIME * 10)
+        #     tags_field.send_keys(Keys.ENTER)
+        #     time.sleep(Constant.USER_WAITING_TIME)
 
         self.browser.find(By.ID, Constant.NEXT_BUTTON).click()
         self.logger.debug('Clicked {}'.format(Constant.NEXT_BUTTON))
