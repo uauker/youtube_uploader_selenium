@@ -75,3 +75,9 @@ youtube.com.pkl
 
 # removing pycache
 __pycache__
+
+# mac files to index is not allow
+.DS_Store
+
+# no log
+*.log
