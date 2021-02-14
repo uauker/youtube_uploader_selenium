@@ -6,10 +6,10 @@ class Constant:
     USER_WAITING_TIME = 1
     VIDEO_TITLE = 'title'
     VIDEO_DESCRIPTION = 'description'
-    VIDEO_TAGS = 'tags'
     DESCRIPTION_CONTAINER = '/html/body/ytcp-uploads-dialog/paper-dialog/div/ytcp-animatable[1]/' \
                             'ytcp-uploads-details/div/ytcp-uploads-basics/ytcp-mention-textbox[2]'
-    MORE_OPTIONS_CONTAINER = '//*[@id="details"]/div/div/ytcp-button'
+    MORE_OPTIONS_CONTAINER = '/html/body/ytcp-uploads-dialog/paper-dialog/div/ytcp-animatable[1]/' \
+                             'ytcp-uploads-details/div/div/ytcp-button/div'
     TEXTBOX = 'textbox'
     TEXT_INPUT = 'text-input'
     RADIO_LABEL = 'radioLabel'
@@ -21,11 +21,9 @@ class Constant:
     VIDEO_URL_CONTAINER = "//span[@class='video-url-fadeable style-scope ytcp-video-info']"
     VIDEO_URL_ELEMENT = "//a[@class='style-scope ytcp-video-info']"
     HREF = 'href'
-    UPLOADED = 'uploaded'
+    UPLOADED = 'Uploading'
     ERROR_CONTAINER = '//*[@id="error-message"]'
     VIDEO_NOT_FOUND_ERROR = 'Could not find video_id'
     DONE_BUTTON = 'done-button'
     INPUT_FILE_VIDEO = "//input[@type='file']"
-    # Javascript
-    MODAL_SCROLL_END = 'var objDiv = document.getElementById("scrollable-content"); objDiv.scrollTop = objDiv.scrollHeight;'
     THUMB_CONTAINER = '//input[@id="file-loader"]'
