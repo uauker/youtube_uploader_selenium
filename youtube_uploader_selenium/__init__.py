@@ -94,14 +94,14 @@ class YouTubeUploader:
         self.__write_in_field(title_field, self.metadata_dict[Constant.VIDEO_TITLE], select_all=True)
         self.logger.debug('The video title was set to \"{}\"'.format(self.metadata_dict[Constant.VIDEO_TITLE]))
 
-        video_description = self.metadata_dict[Constant.VIDEO_DESCRIPTION]
-        if video_description and len(video_description) < 5010:
-            description_container = self.browser.find(By.XPATH,
-                                                      Constant.DESCRIPTION_CONTAINER)
-            description_field = self.browser.find(By.ID, Constant.TEXTBOX, element=description_container)
-            self.__write_in_field(description_field, self.metadata_dict[Constant.VIDEO_DESCRIPTION])
-            self.logger.debug(
-                'The video description was set to \"{}\"'.format(self.metadata_dict[Constant.VIDEO_DESCRIPTION]))
+        # video_description = self.metadata_dict[Constant.VIDEO_DESCRIPTION]
+        # if video_description and len(video_description) < 5010:
+        #     description_container = self.browser.find(By.XPATH,
+        #                                               Constant.DESCRIPTION_CONTAINER)
+        #     description_field = self.browser.find(By.ID, Constant.TEXTBOX, element=description_container)
+        #     self.__write_in_field(description_field, self.metadata_dict[Constant.VIDEO_DESCRIPTION])
+        #     self.logger.debug(
+        #         'The video description was set to \"{}\"'.format(self.metadata_dict[Constant.VIDEO_DESCRIPTION]))
 
         kids_section = self.browser.find(By.NAME, Constant.NOT_MADE_FOR_KIDS_LABEL)
         self.browser.find(By.ID, Constant.RADIO_LABEL, kids_section).click()
@@ -119,10 +119,13 @@ class YouTubeUploader:
             'The tags were set to \"{}\"'.format(self.metadata_dict[Constant.VIDEO_TAGS]))
 
         self.browser.find(By.ID, Constant.NEXT_BUTTON).click()
-        self.logger.debug('Clicked {}'.format(Constant.NEXT_BUTTON))
+        self.logger.debug('Clicked {} one'.format(Constant.NEXT_BUTTON))
 
         self.browser.find(By.ID, Constant.NEXT_BUTTON).click()
-        self.logger.debug('Clicked another {}'.format(Constant.NEXT_BUTTON))
+        self.logger.debug('Clicked {} two'.format(Constant.NEXT_BUTTON))
+
+        self.browser.find(By.ID, Constant.NEXT_BUTTON).click()
+        self.logger.debug('Clicked {} three'.format(Constant.NEXT_BUTTON))
 
         public_main_button = self.browser.find(By.NAME, Constant.PUBLIC_BUTTON)
         self.browser.find(By.ID, Constant.RADIO_LABEL, public_main_button).click()
